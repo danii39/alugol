@@ -1,0 +1,373 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Alugol – Conectando Jogadores e Quadras</title>
+  <style>
+    :root {
+      --bg-dark: #0a0a0a;
+      --text-light: #ffffff;
+      --accent-green: #39ff14;
+    }
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    body {
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+      background: 
+        radial-gradient(circle at 12% 18%, rgba(57,255,20,0.12), transparent 25%),
+        radial-gradient(circle at 88% 20%, rgba(57,255,20,0.1), transparent 30%),
+        radial-gradient(circle at 82% 78%, rgba(57,255,20,0.1), transparent 28%),
+        radial-gradient(circle at 22% 82%, rgba(57,255,20,0.08), transparent 30%),
+        radial-gradient(circle at 50% 95%, rgba(57,255,20,0.07), transparent 22%),
+        var(--bg-dark);
+      background-attachment: fixed;
+      background-size: cover;
+      color: var(--text-light);
+      line-height: 1.7;
+      overflow-x: hidden;
+      scroll-behavior: smooth;
+      font-size: 1.1rem;
+    }
+
+    header {
+      position: fixed;
+      top: 1rem;
+      left: 50%;
+      transform: translateX(-50%);
+      width: 90%;
+      padding: 1.2rem 3rem;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      backdrop-filter: blur(12px);
+      background: rgba(26,26,26,0.6);
+      border-radius: 50px;
+      box-shadow: 0 8px 25px rgba(0,0,0,0.4);
+      border: 1px solid rgba(255,255,255,0.1);
+      z-index: 1000;
+    }
+    .logo {
+      font-size: 2rem;
+      font-weight: 900;
+      color: var(--accent-green);
+      text-decoration: none;
+    }
+    nav a {
+      color: var(--accent-green);
+      text-decoration: none;
+      margin: 0 1.2rem;
+      font-weight: 600;
+      font-size: 1.2rem;
+    }
+
+    section { padding: 8rem 2rem 6rem; text-align: center; }
+    h1 { font-size: 5.5rem; font-weight: 900; color: var(--accent-green); margin-bottom: 1.8rem; }
+    h2 { font-size: 3rem; margin-bottom: 3rem; color: var(--accent-green); text-align: center; }
+
+    /* Hero text styling */
+    #top p {
+      max-width: 800px;
+      margin: 0 auto 2rem;
+      font-size: 1.6rem;
+      line-height: 1.8;
+      color: var(--text-light);
+    }
+
+    /* Toggle Buttons */
+    .toggle-container {
+      display: flex;
+      justify-content: center;
+      gap: 2rem;
+      margin-bottom: 3rem;
+    }
+    .toggle-option {
+      position: relative;
+      font-size: 1.2rem;
+      font-weight: 600;
+      cursor: pointer;
+      color: #888;
+      padding: 0.5rem 1rem;
+      transition: color 0.3s ease;
+    }
+    .toggle-option.active {
+      color: var(--accent-green);
+    }
+    .toggle-option::after {
+      content: "";
+      display: block;
+      width: 0%;
+      height: 3px;
+      background: var(--accent-green);
+      border-radius: 2px;
+      margin-top: 5px;
+      transition: width 0.3s ease;
+    }
+    .toggle-option.active::after {
+      width: 100%;
+    }
+
+    /* Cards */
+    .beneficios-cards {
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: center;
+      gap: 3rem;
+    }
+    .card {
+      width: 300px;
+      height: 360px;
+      border-radius: 20px;
+      background: transparent;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      transition: all 0.4s ease;
+      padding: 0.4px; /* razor-thin border space */
+    }
+    .card2 {
+      width: 100%;
+      height: 100%;
+      background: rgba(26, 26, 26, 0.4); /* semi-transparent glass */
+      border-radius: 18px;
+      padding: 1.8rem;
+      text-align: center;
+      transition: transform 0.3s ease, background 0.3s ease;
+      display: flex;
+      flex-direction: column;
+      justify-content: flex-start;
+      align-items: center;
+      backdrop-filter: blur(12px);
+      -webkit-backdrop-filter: blur(12px);
+      border: 1px solid rgba(255,255,255,0.08);
+      box-shadow: inset 0 1px 0 rgba(255,255,255,0.15),
+                  0 4px 20px rgba(0,0,0,0.4);
+      overflow: hidden;
+    }
+    .card:hover {
+      box-shadow: 0 0 6px 1px rgba(57, 255, 20, 0.9); /* thin neon outline */
+    }
+    .card2:hover {
+      transform: scale(0.98);
+    }
+    .card2 h3 {
+      color: var(--accent-green);
+      margin-bottom: 1rem;
+      font-size: 1.6rem;
+    }
+    .card2 p {
+      font-size: 1.15rem;
+      color: var(--text-light);
+    }
+
+    .hidden { display: none; }
+
+    /* Como funciona */
+    .how-item {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 3rem;
+      margin-bottom: 5rem;
+      flex-wrap: wrap;
+    }
+    .how-item img {
+      width: 100%;
+      max-width: 360px;
+      border-radius: 20px;
+      box-shadow: 0 10px 30px rgba(0,0,0,0.6);
+      transition: transform 0.4s ease, box-shadow 0.4s ease;
+      cursor: pointer;
+    }
+    .how-item img:hover {
+      transform: scale(1.05);
+      box-shadow: 0 15px 40px rgba(0,0,0,0.8);
+    }
+    .how-text {
+      max-width: 420px;
+      text-align: center;
+    }
+    .how-text h3 {
+      font-size: 2.2rem;
+      margin-bottom: 1.2rem;
+      color: var(--accent-green);
+    }
+    .how-text p {
+      font-size: 1.25rem;
+      color: var(--text-light);
+    }
+    .how-item.reverse { flex-direction: row-reverse; }
+
+    @media (max-width: 900px) {
+      .how-item, .how-item.reverse { flex-direction: column; }
+    }
+
+    /* Footer */
+    footer {
+      background: transparent;
+      color: #bbb;
+      padding: 2rem;
+      font-size: 1rem;
+      margin-top: 4rem;
+      text-align: center;
+    }
+    .social-icons {
+      display: flex;
+      justify-content: center;
+      gap: 1rem;
+      margin-bottom: 1.5rem;
+    }
+    .social-icons a {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      width: 50px;
+      height: 50px;
+      border-radius: 50%;
+      background: #fff;
+      color: #333;
+      transition: all 0.3s ease;
+    }
+    .social-icons a:hover {
+      background: var(--accent-green);
+      box-shadow: 0 0 25px 5px rgba(57,255,20,0.6);
+      color: #000;
+    }
+    .social-icons svg {
+      width: 28px;
+      height: 28px;
+    }
+  </style>
+</head>
+<body>
+
+  <!-- Header -->
+  <header>
+    <a href="#top" class="logo">ALUGOL</a>
+    <nav>
+      <a href="#beneficios">Benefícios</a>
+      <a href="#como-funciona">Como funciona</a>
+    </nav>
+  </header>
+
+  <!-- Hero -->
+  <section id="top">
+    <h1>ALUGOL</h1>
+    <p>
+      Nossa missão no Alugol é conectar jogadores de esportes com os melhores campos e quadras, 
+      criando um marketplace onde os usuários podem buscar e reservar o local perfeito com base 
+      em suas preferências, desejos e necessidades.
+    </p>
+  </section>
+
+  <!-- Beneficios -->
+  <section id="beneficios">
+    <h2>Benefícios</h2>
+    <div class="toggle-container">
+      <span class="toggle-option active" data-target="jogadores">Jogadores</span>
+      <span class="toggle-option" data-target="gestores">Gestores</span>
+    </div>
+
+    <!-- Jogadores -->
+    <div id="jogadores" class="beneficios-cards">
+      <div class="card"><div class="card2">
+        <h3>Exploração Simples</h3>
+        <p>O Alugol oferece um marketplace onde consumidores podem facilmente buscar quadras, com uma experiência intuitiva e agradável.</p>
+      </div></div>
+      <div class="card"><div class="card2">
+        <h3>Familiaridade</h3>
+        <p>Fotos, avaliações, lista de comodidades e comentários permitem que os usuários se familiarizem antes da locação.</p>
+      </div></div>
+      <div class="card"><div class="card2">
+        <h3>Reserva Rápida</h3>
+        <p>Escolha seu horário preferido e finalize sua reserva em poucos cliques — com busca, avaliação e pagamento sem complicação.</p>
+      </div></div>
+    </div>
+
+    <!-- Gestores -->
+    <div id="gestores" class="beneficios-cards hidden">
+      <div class="card"><div class="card2">
+        <h3>Gestão simplificada</h3>
+        <p>Controle total das suas quadras em um só lugar, com menos tempo gasto em organização.</p>
+      </div></div>
+      <div class="card"><div class="card2">
+        <h3>Maior visibilidade</h3>
+        <p>Conecte sua quadra a novos clientes sem precisar investir em divulgação cara.</p>
+      </div></div>
+      <div class="card"><div class="card2">
+        <h3>Pagamentos seguros</h3>
+        <p>Receba de forma prática e confiável, com a segurança do Alugol.</p>
+      </div></div>
+    </div>
+  </section>
+
+  <!-- Como funciona -->
+  <section id="como-funciona">
+    <h2>Como funciona o Alugol?</h2>
+
+    <div class="how-item">
+      <img src="home-page.png" alt="Tela inicial do app Alugol">
+      <div class="how-text">
+        <h3>Buscar</h3>
+        <p>Procure o campo perfeito usando filtros de data, horário, preço e localização.</p>
+      </div>
+    </div>
+
+    <div class="how-item reverse">
+      <img src="field-page.png" alt="Tela de detalhes de quadra">
+      <div class="how-text">
+        <h3>Avaliar</h3>
+        <p>Veja comodidades, avaliações e fotos antes de reservar.</p>
+      </div>
+    </div>
+
+    <div class="how-item">
+      <img src="time-booking-page.png" alt="Tela de seleção de horário">
+      <div class="how-text">
+        <h3>Reservar</h3>
+        <p>Escolha seu horário e faça a reserva de forma avulsa, semanal ou mensal.</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- Footer -->
+  <footer>
+    <div class="social-icons">
+      <a href="https://www.linkedin.com/company/alugol" target="_blank" rel="noopener">
+        <svg xmlns="http://www.w3.org/2000/svg" role="img" viewBox="0 0 448 512">
+          <path fill="currentColor" d="M100.28 448H7.4V148.9h92.88zM53.79 108.1C24.09 108.1 0 83 0 53.4a53.79 53.79 0 1 1 107.58 0c0 29.6-24.09 54.7-53.79 54.7zM447.9 448h-92.4V304.1c0-34.3-.7-78.3-47.7-78.3-47.7 0-55 37.2-55 75.7V448h-92.4V148.9h88.7v40.8h1.3c12.4-23.6 42.7-48.4 87.8-48.4 93.9 0 111.2 61.8 111.2 142.3V448z"/>
+        </svg>
+      </a>
+      <a href="https://www.instagram.com/alugol.app/" target="_blank" rel="noopener">
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"
+             fill="none" stroke="currentColor" stroke-width="2"
+             stroke-linecap="round" stroke-linejoin="round">
+          <rect x="2" y="2" width="20" height="20" rx="5" ry="5"></rect>
+          <path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z"></path>
+          <line x1="17.5" y1="6.5" x2="17.5" y2="6.5"></line>
+        </svg>
+      </a>
+    </div>
+    <p>© 2025 Alugol. Todos os direitos reservados.</p>
+  </footer>
+
+  <script>
+    const toggleOptions = document.querySelectorAll('.toggle-option');
+    const jogadores = document.getElementById('jogadores');
+    const gestores = document.getElementById('gestores');
+
+    toggleOptions.forEach(option => {
+      option.addEventListener('click', () => {
+        toggleOptions.forEach(opt => opt.classList.remove('active'));
+        option.classList.add('active');
+        if (option.dataset.target === 'jogadores') {
+          jogadores.classList.remove('hidden');
+          gestores.classList.add('hidden');
+        } else {
+          gestores.classList.remove('hidden');
+          jogadores.classList.add('hidden');
+        }
+      });
+    });
+  </script>
+</body>
+</html>
