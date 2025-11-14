@@ -6,22 +6,15 @@
   <title>Alugol – Conectando Jogadores e Quadras</title>
   <style>
     :root {
-      --bg-dark: #0a0a0a;
-      --text-light: #ffffff;
+      --bg-dark: #5F5F7;
+      --text-light: #1D1D1F;
       --accent-green: #39ff14;
     }
     * { margin: 0; padding: 0; box-sizing: border-box; }
+
     body {
       font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
-      background: 
-        radial-gradient(circle at 12% 18%, rgba(57,255,20,0.12), transparent 25%),
-        radial-gradient(circle at 88% 20%, rgba(57,255,20,0.1), transparent 30%),
-        radial-gradient(circle at 82% 78%, rgba(57,255,20,0.1), transparent 28%),
-        radial-gradient(circle at 22% 82%, rgba(57,255,20,0.08), transparent 30%),
-        radial-gradient(circle at 50% 95%, rgba(57,255,20,0.07), transparent 22%),
-        var(--bg-dark);
-      background-attachment: fixed;
-      background-size: cover;
+      background: var(--bg-dark);
       color: var(--text-light);
       line-height: 1.7;
       overflow-x: hidden;
@@ -29,6 +22,7 @@
       font-size: 1.1rem;
     }
 
+    /* Header */
     header {
       position: fixed;
       top: 1rem;
@@ -40,31 +34,43 @@
       justify-content: space-between;
       align-items: center;
       backdrop-filter: blur(12px);
-      background: rgba(26,26,26,0.6);
+      background: rgba(255,255,255,0.08);
       border-radius: 50px;
-      box-shadow: 0 8px 25px rgba(0,0,0,0.4);
+      box-shadow: 0 8px 25px rgba(0,0,0,0.3);
       border: 1px solid rgba(255,255,255,0.1);
       z-index: 1000;
     }
     .logo {
       font-size: 2rem;
       font-weight: 900;
-      color: var(--accent-green);
+      color: var(--accent-green); /* ALUGOL stays green */
       text-decoration: none;
     }
     nav a {
-      color: var(--accent-green);
+      color: var(--text-light);   /* nav links now off-white, not green */
       text-decoration: none;
       margin: 0 1.2rem;
       font-weight: 600;
       font-size: 1.2rem;
     }
 
-    section { padding: 8rem 2rem 6rem; text-align: center; }
-    h1 { font-size: 5.5rem; font-weight: 900; color: var(--accent-green); margin-bottom: 1.8rem; }
-    h2 { font-size: 3rem; margin-bottom: 3rem; color: var(--accent-green); text-align: center; }
+    section {
+      padding: 8rem 2rem 6rem;
+      text-align: center;
+    }
+    h1 {
+      font-size: 5.5rem;
+      font-weight: 900;
+      color: var(--accent-green); /* main ALUGOL title in green */
+      margin-bottom: 1.8rem;
+    }
+    h2 {
+      font-size: 3rem;
+      margin-bottom: 3rem;
+      color: var(--text-light);   /* section titles now off-white */
+      text-align: center;
+    }
 
-    /* Hero text styling */
     #top p {
       max-width: 800px;
       margin: 0 auto 2rem;
@@ -85,26 +91,24 @@
       font-size: 1.2rem;
       font-weight: 600;
       cursor: pointer;
-      color: #888;
+      color: #aaa;
       padding: 0.5rem 1rem;
       transition: color 0.3s ease;
     }
     .toggle-option.active {
-      color: var(--accent-green);
+      color: var(--text-light);   /* text no longer green */
     }
     .toggle-option::after {
       content: "";
       display: block;
       width: 0%;
       height: 3px;
-      background: var(--accent-green);
+      background: var(--accent-green);  /* underline stays green as accent */
       border-radius: 2px;
       margin-top: 5px;
       transition: width 0.3s ease;
     }
-    .toggle-option.active::after {
-      width: 100%;
-    }
+    .toggle-option.active::after { width: 100%; }
 
     /* Cards */
     .beneficios-cards {
@@ -127,7 +131,7 @@
     .card2 {
       width: 100%;
       height: 100%;
-      background: rgba(26, 26, 26, 0.4); /* semi-transparent glass */
+      background: rgba(255,255,255,0.05);
       border-radius: 18px;
       padding: 1.8rem;
       text-align: center;
@@ -137,20 +141,17 @@
       justify-content: flex-start;
       align-items: center;
       backdrop-filter: blur(12px);
-      -webkit-backdrop-filter: blur(12px);
       border: 1px solid rgba(255,255,255,0.08);
-      box-shadow: inset 0 1px 0 rgba(255,255,255,0.15),
-                  0 4px 20px rgba(0,0,0,0.4);
+      box-shadow: inset 0 1px 0 rgba(255,255,255,0.1),
+                  0 4px 20px rgba(0,0,0,0.3);
       overflow: hidden;
     }
     .card:hover {
-      box-shadow: 0 0 6px 1px rgba(57, 255, 20, 0.9); /* thin neon outline */
+      box-shadow: 0 0 6px 1px rgba(57, 255, 20, 0.7); /* thin neon outline */
     }
-    .card2:hover {
-      transform: scale(0.98);
-    }
+    .card2:hover { transform: scale(0.98); }
     .card2 h3 {
-      color: var(--accent-green);
+      color: var(--text-light);   /* card titles now off-white */
       margin-bottom: 1rem;
       font-size: 1.6rem;
     }
@@ -161,7 +162,7 @@
 
     .hidden { display: none; }
 
-    /* Como funciona */
+    /* How it works */
     .how-item {
       display: flex;
       align-items: center;
@@ -174,13 +175,13 @@
       width: 100%;
       max-width: 360px;
       border-radius: 20px;
-      box-shadow: 0 10px 30px rgba(0,0,0,0.6);
+      box-shadow: 0 10px 30px rgba(0,0,0,0.4);
       transition: transform 0.4s ease, box-shadow 0.4s ease;
       cursor: pointer;
     }
     .how-item img:hover {
       transform: scale(1.05);
-      box-shadow: 0 15px 40px rgba(0,0,0,0.8);
+      box-shadow: 0 15px 40px rgba(0,0,0,0.5);
     }
     .how-text {
       max-width: 420px;
@@ -189,7 +190,7 @@
     .how-text h3 {
       font-size: 2.2rem;
       margin-bottom: 1.2rem;
-      color: var(--accent-green);
+      color: var(--text-light);   /* how-it-works titles off-white */
     }
     .how-text p {
       font-size: 1.25rem;
@@ -198,13 +199,16 @@
     .how-item.reverse { flex-direction: row-reverse; }
 
     @media (max-width: 900px) {
-      .how-item, .how-item.reverse { flex-direction: column; }
+      .how-item,
+      .how-item.reverse {
+        flex-direction: column;
+      }
     }
 
     /* Footer */
     footer {
       background: transparent;
-      color: #bbb;
+      color: var(--text-light);
       padding: 2rem;
       font-size: 1rem;
       margin-top: 4rem;
@@ -223,21 +227,23 @@
       width: 50px;
       height: 50px;
       border-radius: 50%;
-      background: #fff;
-      color: #333;
+      background: rgba(255,255,255,0.1);
+      color: var(--text-light);
       transition: all 0.3s ease;
     }
     .social-icons a:hover {
-      background: var(--accent-green);
-      box-shadow: 0 0 25px 5px rgba(57,255,20,0.6);
+      background: var(--accent-green); /* accent green as background, not text */
       color: #000;
+      box-shadow: 0 0 25px 5px rgba(57,255,20,0.5);
     }
     .social-icons svg {
       width: 28px;
       height: 28px;
     }
+
   </style>
 </head>
+
 <body>
 
   <!-- Header -->
@@ -259,7 +265,7 @@
     </p>
   </section>
 
-  <!-- Beneficios -->
+  <!-- Benefícios -->
   <section id="beneficios">
     <h2>Benefícios</h2>
     <div class="toggle-container">
@@ -275,11 +281,11 @@
       </div></div>
       <div class="card"><div class="card2">
         <h3>Familiaridade</h3>
-        <p>Fotos, avaliações, lista de comodidades e comentários permitem que os usuários se familiarizem antes da locação.</p>
+        <p>Fotos, avaliações e comodidades permitem que jogadores conheçam o espaço antes de reservar.</p>
       </div></div>
       <div class="card"><div class="card2">
         <h3>Reserva Rápida</h3>
-        <p>Escolha seu horário preferido e finalize sua reserva em poucos cliques — com busca, avaliação e pagamento sem complicação.</p>
+        <p>Busque, avalie e pague em poucos cliques — tudo num só lugar.</p>
       </div></div>
     </div>
 
@@ -287,15 +293,15 @@
     <div id="gestores" class="beneficios-cards hidden">
       <div class="card"><div class="card2">
         <h3>Gestão simplificada</h3>
-        <p>Controle total das suas quadras em um só lugar, com menos tempo gasto em organização.</p>
+        <p>Gerencie horários, pagamentos e reservas num painel moderno e intuitivo.</p>
       </div></div>
       <div class="card"><div class="card2">
         <h3>Maior visibilidade</h3>
-        <p>Conecte sua quadra a novos clientes sem precisar investir em divulgação cara.</p>
+        <p>Receba novos clientes sem depender de divulgação própria.</p>
       </div></div>
       <div class="card"><div class="card2">
         <h3>Pagamentos seguros</h3>
-        <p>Receba de forma prática e confiável, com a segurança do Alugol.</p>
+        <p>Receba com tranquilidade e segurança sem complicações.</p>
       </div></div>
     </div>
   </section>
@@ -308,25 +314,26 @@
       <img src="home-page.png" alt="Tela inicial do app Alugol">
       <div class="how-text">
         <h3>Buscar</h3>
-        <p>Procure o campo perfeito usando filtros de data, horário, preço e localização.</p>
+        <p>Filtre por data, horário, localização e preço para encontrar o campo ideal.</p>
       </div>
     </div>
 
     <div class="how-item reverse">
-      <img src="field-page.png" alt="Tela de detalhes de quadra">
+      <img src="field-page.png" alt="Tela de detalhes da quadra">
       <div class="how-text">
         <h3>Avaliar</h3>
-        <p>Veja comodidades, avaliações e fotos antes de reservar.</p>
+        <p>Veja fotos, reviews e comodidades antes de reservar.</p>
       </div>
     </div>
 
     <div class="how-item">
-      <img src="time-booking-page.png" alt="Tela de seleção de horário">
+      <img src="time-booking-page.png" alt="Tela de horários">
       <div class="how-text">
         <h3>Reservar</h3>
-        <p>Escolha seu horário e faça a reserva de forma avulsa, semanal ou mensal.</p>
+        <p>Escolha o horário e complete sua reserva rapidamente — avulsa, semanal ou mensal.</p>
       </div>
     </div>
+
   </section>
 
   <!-- Footer -->
@@ -359,6 +366,7 @@
       option.addEventListener('click', () => {
         toggleOptions.forEach(opt => opt.classList.remove('active'));
         option.classList.add('active');
+
         if (option.dataset.target === 'jogadores') {
           jogadores.classList.remove('hidden');
           gestores.classList.add('hidden');
@@ -369,5 +377,6 @@
       });
     });
   </script>
+
 </body>
 </html>
