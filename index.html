@@ -43,11 +43,11 @@
     .logo {
       font-size: 2rem;
       font-weight: 900;
-      color: var(--accent-green); /* ALUGOL stays green */
+      color: var(--accent-green);
       text-decoration: none;
     }
     nav a {
-      color: var(--text-light);   /* nav links now off-white, not green */
+      color: var(--text-light);
       text-decoration: none;
       margin: 0 1.2rem;
       font-weight: 600;
@@ -61,13 +61,13 @@
     h1 {
       font-size: 5.5rem;
       font-weight: 900;
-      color: var(--accent-green); /* main ALUGOL title in green */
+      color: var(--accent-green);
       margin-bottom: 1.8rem;
     }
     h2 {
       font-size: 3rem;
       margin-bottom: 3rem;
-      color: var(--text-light);   /* section titles now off-white */
+      color: var(--text-light);
       text-align: center;
     }
 
@@ -96,14 +96,14 @@
       transition: color 0.3s ease;
     }
     .toggle-option.active {
-      color: var(--text-light);   /* text no longer green */
+      color: var(--text-light);
     }
     .toggle-option::after {
       content: "";
       display: block;
       width: 0%;
       height: 3px;
-      background: var(--accent-green);  /* underline stays green as accent */
+      background: var(--accent-green);
       border-radius: 2px;
       margin-top: 5px;
       transition: width 0.3s ease;
@@ -126,7 +126,7 @@
       align-items: center;
       justify-content: center;
       transition: all 0.4s ease;
-      padding: 0.4px; /* razor-thin border space */
+      padding: 0.4px;
     }
     .card2 {
       width: 100%;
@@ -135,7 +135,6 @@
       border-radius: 18px;
       padding: 1.8rem;
       text-align: center;
-      transition: transform 0.3s ease, background 0.3s ease;
       display: flex;
       flex-direction: column;
       justify-content: flex-start;
@@ -147,11 +146,12 @@
       overflow: hidden;
     }
     .card:hover {
-      box-shadow: 0 0 6px 1px rgba(57, 255, 20, 0.7); /* thin neon outline */
+      box-shadow: 0 0 6px 1px rgba(57, 255, 20, 0.7);
     }
     .card2:hover { transform: scale(0.98); }
+
     .card2 h3 {
-      color: var(--text-light);   /* card titles now off-white */
+      color: var(--text-light);
       margin-bottom: 1rem;
       font-size: 1.6rem;
     }
@@ -171,18 +171,18 @@
       margin-bottom: 5rem;
       flex-wrap: wrap;
     }
+
+    /* 👇 CLEAN PNG — no corners, no shadow, no clipping */
     .how-item img {
       width: 100%;
       max-width: 360px;
-      border-radius: 20px;
-      box-shadow: 0 10px 30px rgba(0,0,0,0.4);
-      transition: transform 0.4s ease, box-shadow 0.4s ease;
-      cursor: pointer;
+      background: none;
+      border-radius: 0;
+      box-shadow: none;
+      cursor: default;
+      transition: none;
     }
-    .how-item img:hover {
-      transform: scale(1.05);
-      box-shadow: 0 15px 40px rgba(0,0,0,0.5);
-    }
+
     .how-text {
       max-width: 420px;
       text-align: center;
@@ -190,7 +190,7 @@
     .how-text h3 {
       font-size: 2.2rem;
       margin-bottom: 1.2rem;
-      color: var(--text-light);   /* how-it-works titles off-white */
+      color: var(--text-light);
     }
     .how-text p {
       font-size: 1.25rem;
@@ -232,7 +232,7 @@
       transition: all 0.3s ease;
     }
     .social-icons a:hover {
-      background: var(--accent-green); /* accent green as background, not text */
+      background: var(--accent-green);
       color: #000;
       box-shadow: 0 0 25px 5px rgba(57,255,20,0.5);
     }
@@ -341,7 +341,11 @@
     <div class="social-icons">
       <a href="https://www.linkedin.com/company/alugol" target="_blank" rel="noopener">
         <svg xmlns="http://www.w3.org/2000/svg" role="img" viewBox="0 0 448 512">
-          <path fill="currentColor" d="M100.28 448H7.4V148.9h92.88zM53.79 108.1C24.09 108.1 0 83 0 53.4a53.79 53.79 0 1 1 107.58 0c0 29.6-24.09 54.7-53.79 54.7zM447.9 448h-92.4V304.1c0-34.3-.7-78.3-47.7-78.3-47.7 0-55 37.2-55 75.7V448h-92.4V148.9h88.7v40.8h1.3c12.4-23.6 42.7-48.4 87.8-48.4 93.9 0 111.2 61.8 111.2 142.3V448z"/>
+          <path fill="currentColor" d="M100.28 448H7.4V148.9h92.88zM53.79 108.1C24.09 108.1   
+0 83 0 53.4a53.79 53.79 0 1 1 107.58 0c0 29.6-24.09 54.7-53.79 54.7zM447.9  
+448h-92.4V304.1c0-34.3-.7-78.3-47.7-78.3-47.7 0-55  
+37.2-55 75.7V448h-92.4V148.9h88.7v40.8h1.3c12.4-23.6  
+42.7-48.4 87.8-48.4 93.9 0 111.2 61.8 111.2 142.3V448z"/>
         </svg>
       </a>
       <a href="https://www.instagram.com/alugol.app/" target="_blank" rel="noopener">
@@ -349,7 +353,8 @@
              fill="none" stroke="currentColor" stroke-width="2"
              stroke-linecap="round" stroke-linejoin="round">
           <rect x="2" y="2" width="20" height="20" rx="5" ry="5"></rect>
-          <path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z"></path>
+          <path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16  
+11.37z"></path>
           <line x1="17.5" y1="6.5" x2="17.5" y2="6.5"></line>
         </svg>
       </a>
