@@ -18,6 +18,9 @@
       --bg-page: #f3f4f6;
       --card-radius: 16px;
       --shadow-soft: 0 8px 20px rgba(0,0,0,0.1);
+      --contact-bg-grey: #1f2229;
+      --contact-text-light: #f5f5f5;
+      --contact-text-muted: #9ca3af;
     }
 
     * { margin: 0; padding: 0; box-sizing: border-box; }
@@ -372,6 +375,149 @@
       }
     }
 
+    /* CONTACT FORM */
+    #contato-alugol {
+      padding: 4rem 1.5rem 3rem;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      background: var(--bg-dark);
+    }
+
+    .form-scale-wrapper {
+      transform: scale(0.80);
+      transform-origin: top center;
+    }
+
+    .contact-form-wrapper {
+      width: min(420px, 90vw);
+      background: var(--contact-bg-grey);
+      padding: 32px 28px;
+      border-radius: 24px;
+      box-shadow: 0 20px 55px rgba(0, 0, 0, 0.35);
+      border: 1.5px solid rgba(57, 255, 20, 0.35);
+      transform: scale(0.92);
+      transform-origin: top center;
+      color: var(--contact-text-light);
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+    }
+
+    .contact-form-wrapper h2 {
+      margin: 0 0 24px;
+      font-size: 1.8rem;
+      text-align: center;
+      color: var(--accent-green);
+      letter-spacing: 0.02em;
+    }
+
+    .contact-form {
+      display: flex;
+      flex-direction: column;
+      gap: 20px;
+    }
+
+    .contact-form .form-group {
+      display: flex;
+      flex-direction: column;
+      gap: 8px;
+    }
+
+    .contact-form label {
+      font-size: 0.9rem;
+      font-weight: 600;
+      color: var(--contact-text-muted);
+    }
+
+    .contact-form input,
+    .contact-form select {
+      width: 100%;
+      padding: 12px 14px;
+      border-radius: 12px;
+      border: 1.5px solid rgba(57, 255, 20, 0.45);
+      background: rgba(255, 255, 255, 0.03);
+      color: var(--contact-text-light);
+      font-size: 1rem;
+      transition: border-color 0.2s ease, box-shadow 0.2s ease;
+    }
+
+    .contact-form input::placeholder {
+      color: rgba(255, 255, 255, 0.45);
+    }
+
+    .contact-form input:focus,
+    .contact-form select:focus {
+      outline: none;
+      border-color: var(--accent-green);
+      box-shadow: 0 0 0 3px rgba(57, 255, 20, 0.15);
+    }
+
+    .checkbox-group {
+      display: grid;
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      gap: 10px 16px;
+    }
+
+    .checkbox-group label {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      font-weight: 500;
+      color: var(--contact-text-light);
+    }
+
+    .checkbox-group input[type="checkbox"] {
+      width: 18px;
+      height: 18px;
+      border-radius: 6px;
+      border: 1.5px solid rgba(57, 255, 20, 0.5);
+      background: transparent;
+      cursor: pointer;
+      appearance: none;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      position: relative;
+      transition: background 0.2s ease, border-color 0.2s ease;
+    }
+
+    .checkbox-group input[type="checkbox"]:focus {
+      outline: none;
+      box-shadow: 0 0 0 3px rgba(57, 255, 20, 0.15);
+    }
+
+    .checkbox-group input[type="checkbox"]:checked {
+      background: var(--accent-green);
+      border-color: var(--accent-green);
+    }
+
+    .checkbox-group input[type="checkbox"]:checked::after {
+      content: "";
+      position: absolute;
+      width: 12px;
+      height: 12px;
+      background: center/contain no-repeat
+        url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 12 10"><path d="M1 5l3 3 7-7" stroke="white" stroke-width="2" fill="none" stroke-linecap="round" stroke-linejoin="round"/></svg>');
+    }
+
+    .contact-form button {
+      margin-top: 8px;
+      width: 100%;
+      padding: 14px;
+      border-radius: 12px;
+      border: none;
+      font-size: 1rem;
+      font-weight: 700;
+      letter-spacing: 0.5px;
+      color: #0e0f13;
+      background: linear-gradient(120deg, var(--accent-green), #6cff62);
+      cursor: pointer;
+      transition: transform 0.2s ease, box-shadow 0.2s ease;
+    }
+
+    .contact-form button:hover {
+      transform: translateY(-1px);
+      box-shadow: 0 15px 30px rgba(57, 255, 20, 0.35);
+    }
     /* MAP SECTION */
     #mapa-alugol {
       padding: 4rem 2rem 8rem;
@@ -596,7 +742,7 @@
       <div class="app-preview-scale">
         <div class="field-example-wrapper">
           <iframe
-            src="app example.html"
+            src="app example cursor.html"
             class="field-example-iframe"
             title="Exemplo do aplicativo Alugol"
             loading="lazy"
@@ -614,8 +760,6 @@
       </ul>
     </div>
   </section>
-
-
   <!-- MAPA ALUGOL -->
   <section id="mapa-alugol">
     <div class="map-wrapper">
@@ -752,6 +896,82 @@
     </div>
   </section>
 
+  <section id="contato-alugol">
+    <div class="form-scale-wrapper">
+      <div class="contact-form-wrapper">
+        <h2>Entre em contato</h2>
+        <form id="alugol-contact-form" class="contact-form">
+          <div class="form-group">
+            <input type="text" name="nome" placeholder="Nome completo" required>
+          </div>
+
+        <div class="form-group">
+          <label for="contactType">Contato preferido</label>
+          <select id="contactType" name="contactType" required>
+            <option value="" disabled selected>Selecione uma opção</option>
+            <option value="email">E-mail</option>
+            <option value="whatsapp">WhatsApp</option>
+          </select>
+        </div>
+
+        <div class="form-group">
+          <input type="text" name="contactValue" placeholder="Seu contato" required>
+        </div>
+
+        <div class="form-group">
+          <label>Quem é você? (Pode marcar mais de uma opção)</label>
+          <div class="checkbox-group">
+            <label><input type="checkbox" name="userType[]" value="jogador"> Jogador</label>
+            <label><input type="checkbox" name="userType[]" value="dono_quadra">Administrador</label>
+            <label><input type="checkbox" name="userType[]" value="treinador">Treinador</label>
+            <label><input type="checkbox" name="userType[]" value="outros"> Outros</label>
+          </div>
+        </div>
+
+        <div class="form-group">
+          <label for="estado">Estado</label>
+          <select id="estado" name="estado" required>
+            <option value="" disabled selected>Selecione o estado</option>
+            <option value="AC">AC - Acre</option>
+            <option value="AL">AL - Alagoas</option>
+            <option value="AP">AP - Amapá</option>
+            <option value="AM">AM - Amazonas</option>
+            <option value="BA">BA - Bahia</option>
+            <option value="CE">CE - Ceará</option>
+            <option value="DF">DF - Distrito Federal</option>
+            <option value="ES">ES - Espírito Santo</option>
+            <option value="GO">GO - Goiás</option>
+            <option value="MA">MA - Maranhão</option>
+            <option value="MT">MT - Mato Grosso</option>
+            <option value="MS">MS - Mato Grosso do Sul</option>
+            <option value="MG">MG - Minas Gerais</option>
+            <option value="PA">PA - Pará</option>
+            <option value="PB">PB - Paraíba</option>
+            <option value="PR">PR - Paraná</option>
+            <option value="PE">PE - Pernambuco</option>
+            <option value="PI">PI - Piauí</option>
+            <option value="RJ">RJ - Rio de Janeiro</option>
+            <option value="RN">RN - Rio Grande do Norte</option>
+            <option value="RS">RS - Rio Grande do Sul</option>
+            <option value="RO">RO - Rondônia</option>
+            <option value="RR">RR - Roraima</option>
+            <option value="SC">SC - Santa Catarina</option>
+            <option value="SP">SP - São Paulo</option>
+            <option value="SE">SE - Sergipe</option>
+            <option value="TO">TO - Tocantins</option>
+          </select>
+        </div>
+
+        <div class="form-group">
+          <input type="text" name="cidade" placeholder="Cidade" required>
+        </div>
+
+        <button type="submit">Enviar</button>
+      </form>
+    </div>
+    </div>
+  </section>
+
   <!-- Footer -->
   <footer>
     <div class="social-icons">
@@ -770,6 +990,8 @@
         </svg>
       </a>
     </div>
+    <p>contato@alugol.com</p>
+    <br>
     <p>© 2025 Alugol. Todos os direitos reservados.</p>
   </footer>
 
@@ -912,7 +1134,26 @@
         });
       });
     })();
-
+    const contactForm = document.getElementById("alugol-contact-form");
+    if (contactForm) {
+      const scriptURL = "https://script.google.com/macros/s/AKfycbyQNjHrqxB-BEmZrENrliWEf6ybMtXP9w-PM9cwKq0bf-qP5uqE5v2C7vW0xjVG4U0E/exec";
+      contactForm.addEventListener("submit", async (event) => {
+        event.preventDefault();
+        const formData = new FormData(contactForm);
+        try {
+          await fetch(scriptURL, {
+            method: "POST",
+            body: formData,
+            mode: "no-cors"
+          });
+          alert("Obrigado! Seu cadastro foi enviado.");
+          contactForm.reset();
+        } catch (err) {
+          console.error(err);
+          alert("Não foi possível enviar seu cadastro. Tente novamente em instantes.");
+        }
+      });
+    }
   </script>
 
 </body>
