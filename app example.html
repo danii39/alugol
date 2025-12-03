@@ -1,0 +1,568 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Alugol – Campo</title>
+
+  <style>
+
+.choose-button,
+.reserve-button {
+  width: 100%;
+  padding: 14px;
+  margin-top: 18px;
+  border: none;
+  border-radius: 12px;
+  background: #2c323c;   /* NEW background color */
+  color: #04d31f;         /* NEW text color */
+  font-size: 16px;
+  font-weight: 600;
+  cursor: pointer;
+}
+
+    /* Amenities grid (2 per row) */
+    .amenities-grid {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr); /* two columns */
+      gap: 12px 18px; /* vertical & horizontal spacing */
+      margin-bottom: 14px;
+    }
+
+    .amenity-item {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      font-size: 15px;
+      color: #000;
+    }
+
+    .amenity-icon {
+      width: 22px;
+      height: 22px;
+      color: #000;
+      flex-shrink: 0;
+    }
+
+    /* Button on first page */
+    
+
+    :root {
+      --accent-green: #39ff14; /* Brand green for header bar */
+      --green-main: #1b5e20;   /* Dark green for calendar header */
+      --green-pill: #2e7d32;   /* Circle for selected day */
+      --text-dark: #000000;
+      --text-muted: #6b7280;
+      --border-soft: #e5e7eb;
+      --alugol-green-dark: #047011;
+      --bg-page: #f3f4f6;
+      --card-radius: 16px;
+      --shadow-soft: 0 8px 20px rgba(0,0,0,0.1);
+    }
+
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+
+    body {
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+      background: var(--bg-page);
+      color: var(--text-dark);
+      display: flex;
+      justify-content: center;
+      padding: 0;
+    }
+
+    .app-shell {
+      width: 100%;
+      max-width: 430px;
+      min-height: 100vh;
+      background: #fff;
+      overflow: hidden;
+      position: relative;
+    }
+
+    /* ---------------- HEADER ---------------- */
+
+    .top-bar {
+      height: 56px;
+      background: var(--accent-green);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      position: sticky;
+      top: 0;
+      z-index: 50;
+    }
+
+    .back-btn {
+      position: absolute;
+      left: 20px; /* moves it slightly right */
+      top: 50%;
+      transform: translateY(-50%);
+      background: transparent;
+      border: none;
+      font-size: 30px; /* larger, cleaner icon */
+      line-height: 1;
+      font-weight: 300; /* thin stroke */
+      color: var(--text-dark);
+      cursor: pointer;
+      display: none; /* hidden on page 1 */
+    }
+
+    .logo-text {
+      font-size: 2rem;
+      font-weight: 900;
+      letter-spacing: 0;
+      color: var(--text-dark);
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+    }
+
+    /* ---------------- CARDS ---------------- */
+
+    .card {
+      background: #fff;
+      border-radius: var(--card-radius);
+      box-shadow: var(--shadow-soft);
+      padding: 16px 16px 20px;
+      margin: 16px;
+    }
+
+    /* ---------------- FIELD CARD ---------------- */
+
+    .field-image-wrapper {
+      position: relative;
+      border-radius: 16px;
+      overflow: hidden;
+      margin-bottom: 16px;
+    }
+
+    .field-image {
+  width: 100%;
+  height: 190px;
+  background-image: url("campo-futebol.png");
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+  border-radius: 16px;
+  position: relative; /* keeps icons on top */
+}
+
+
+    .heart-icon {
+      position: absolute;
+      top: 12px;
+      right: 12px;
+      background: rgba(255,255,255,0.9);
+      width: 28px;
+      height: 28px;
+      border-radius: 50%;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      font-size: 16px;
+      color: #e0245e;
+    }
+
+    .carousel-dots {
+      position: absolute;
+      bottom: 10px;
+      left: 50%;
+      transform: translateX(-50%);
+      display: flex;
+      gap: 6px;
+    }
+
+    .dot {
+      width: 6px;
+      height: 6px;
+      background: rgba(255,255,255,0.7);
+      border-radius: 999px;
+    }
+
+    .dot.active {
+      width: 14px;
+      background: #fff;
+    }
+
+    .field-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 4px;
+    }
+
+    .field-name {
+      font-size: 20px;
+      font-weight: 700;
+      color: #047011;
+    }
+
+    .rating { display: flex; align-items: center; gap: 4px; font-size: 14px; }
+    .rating-star { color: #ffcc00; }
+
+    .field-address {
+      font-size: 14px;
+      color: var(--text-muted);
+      margin-bottom: 10px;
+    }
+
+    .field-price {
+      font-size: 16px;
+      margin-bottom: 16px;
+      color: #000;
+    }
+
+    .field-price strong {
+      font-size: 18px;
+      color: #047011;
+    }
+
+    .section-title {
+      font-size: 18px;
+      font-weight: 700;
+      margin-top: 14px;
+      margin-bottom: 8px;
+      color: #047011;
+    }
+
+    .info-text {
+      font-size: 14px;
+      line-height: 1.6;
+      color: var(--text-muted);
+    }
+
+    hr {
+      border: none;
+      border-top: 1px solid var(--border-soft);
+      margin: 16px 0;
+    }
+
+    /* ---------------- BOOKING SCREEN ---------------- */
+
+    .booking-title {
+      font-size: 22px;
+      font-weight: 700;
+      margin-bottom: 8px;
+      color: #000;
+    }
+
+    .booking-subtitle {
+      font-size: 16px;
+      font-weight: 600;
+      margin: 10px 0 4px;
+      color: #000;
+    }
+
+    /* ---- CALENDAR STYLES ---- */
+
+    .calendar {
+      border-radius: 16px;
+      border: 1px solid var(--border-soft);
+      overflow: hidden;
+      box-shadow: 0 4px 10px rgba(0,0,0,0.04);
+      margin-bottom: 18px;
+      background: #fff;
+    }
+
+    .calendar-header {
+      background: var(--green-main); /* dark green bar */
+      color: #fff;
+      padding: 10px 14px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      font-size: 14px;
+      font-weight: 600;
+    }
+
+    .calendar-nav {
+      display: flex;
+      gap: 6px;
+    }
+
+    .calendar-nav button {
+      border: none;
+      background: rgba(255,255,255,0.15);
+      color: #fff;
+      width: 24px;
+      height: 24px;
+      border-radius: 999px;
+      cursor: default;
+      font-size: 14px;
+    }
+
+    .calendar-body {
+      background: #fff;
+      padding: 10px 12px 12px;
+    }
+
+    .calendar-row {
+      display: grid;
+      grid-template-columns: repeat(7, 1fr);
+      gap: 4px;
+      margin-bottom: 6px;
+    }
+
+    .calendar-day-label {
+      font-size: 11px;
+      text-align: center;
+      color: var(--text-muted);
+      font-weight: 500;
+    }
+
+    .calendar-day {
+      font-size: 13px;
+      text-align: center;
+      padding: 6px 0;
+      border-radius: 999px;
+      cursor: default;
+      color: #111827;
+    }
+
+    .calendar-day.muted {
+      color: #d1d5db;
+    }
+
+    .calendar-day.selected {
+      background: var(--green-pill);
+      color: #fff;
+      font-weight: 600;
+    }
+
+    .times-note {
+      font-size: 12px;
+      color: var(--text-muted);
+      margin-bottom: 10px;
+    }
+
+    .time-slot {
+      display: flex;
+      justify-content: space-between;
+      border: 1px solid var(--border-soft);
+      padding: 10px 14px;
+      border-radius: 10px;
+      font-size: 14px;
+      margin-bottom: 8px;
+      cursor: pointer;
+      background: #fff;
+      color: #000;
+    }
+
+    .time-slot.selected {
+      background: #eaffea;
+      border-color: var(--accent-green);
+    }
+
+    .hide { display: none !important; }
+  </style>
+</head>
+
+<body>
+  <div class="app-shell">
+
+    <!-- HEADER -->
+    <div class="top-bar">
+      <button class="back-btn" id="back-button">❮</button>
+      <div class="logo-text">ALUGOL</div>
+    </div>
+
+    <!-- -------- STEP 1: FIELD INFO -------- -->
+    <section id="step-1" class="card">
+
+      <div class="field-image-wrapper">
+        <div class="field-image"></div>
+        <div class="heart-icon">♥</div>
+
+        <div class="carousel-dots">
+          <div class="dot active"></div><div class="dot"></div><div class="dot"></div>
+        </div>
+      </div>
+
+      <div class="field-header">
+        <div class="field-name">Campo Futebol</div>
+        <div class="rating">
+          <span class="rating-star">★</span> 5.0
+        </div>
+      </div>
+
+      <div class="field-address">Rua Alugol, 2025 – São Paulo, SP</div>
+
+      <div class="field-price"><strong>R$ 50,00</strong>/hora</div>
+
+      <div class="section-title">Comodidades</div>
+
+      <div class="amenities-grid">
+        <div class="amenity-item">
+          <!-- Locker Icon -->
+          <svg class="amenity-icon" viewBox="0 0 24 24">
+            <path d="M4 3h10a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2H4a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2zm8 4H6m6 4H6m2 4h2" 
+                  stroke="currentColor" stroke-width="2" fill="none" stroke-linecap="round"/>
+          </svg>
+          <span>Armários</span>
+        </div>
+
+        <div class="amenity-item">
+          <!-- Shower Icon -->
+          <svg class="amenity-icon" viewBox="0 0 24 24">
+            <path d="M4 3h10a2 2 0 0 1 2 2v4H4V5a2 2 0 0 1 2-2zm6 7v3m-3 0v3m6-3v3m3-3v3" 
+                  stroke="currentColor" stroke-width="2" fill="none" stroke-linecap="round"/>
+          </svg>
+          <span>Chuveiros</span>
+        </div>
+
+        <div class="amenity-item">
+          <!-- Stadium Icon -->
+          <svg class="amenity-icon" viewBox="0 0 24 24">
+            <path d="M3 11h18m-16 0v7m14-7v7M2 11l10-6 10 6" 
+                  stroke="currentColor" stroke-width="2" fill="none" stroke-linecap="round"/>
+          </svg>
+          <span>Arquibancada</span>
+        </div>
+
+        <div class="amenity-item">
+          <!-- Wheelchair Icon -->
+          <svg class="amenity-icon" viewBox="0 0 24 24">
+            <circle cx="7" cy="17" r="3" stroke="currentColor" stroke-width="2" fill="none"/>
+            <path d="M10 10l3 1m-3 3l5 1 2 4" stroke="currentColor" stroke-width="2"
+                  fill="none" stroke-linecap="round"/>
+            <circle cx="12" cy="5" r="2" stroke="currentColor" stroke-width="2" fill="none"/>
+          </svg>
+          <span>Acessível</span>
+        </div>
+      </div>
+
+      <hr>
+
+      <div class="section-title">Informações</div>
+      <p class="info-text">
+        Campo bem cuidado com gramado sintético de alta qualidade, ideal para jogos recreativos ou treinamentos. Iluminação completa e estrutura segura para grupos de todos os níveis. 
+      </p>
+
+      <button id="continue-btn" class="choose-button">Escolha data e horário</button>
+    </section>
+
+    <!-- -------- STEP 2: BOOKING -------- -->
+    <section id="step-2" class="card hide">
+
+      
+
+      <div class="booking-subtitle">Selecione a data:</div>
+
+      <div class="calendar">
+        <div class="calendar-header">
+          <span>Janeiro 2024</span>
+          <div class="calendar-nav">
+            <button>&lt;</button>
+            <button>&gt;</button>
+          </div>
+        </div>
+
+        <div class="calendar-body">
+          <!-- Weekday labels -->
+          <div class="calendar-row">
+            <div class="calendar-day-label">Dom</div>
+            <div class="calendar-day-label">Seg</div>
+            <div class="calendar-day-label">Ter</div>
+            <div class="calendar-day-label">Qua</div>
+            <div class="calendar-day-label">Qui</div>
+            <div class="calendar-day-label">Sex</div>
+            <div class="calendar-day-label">Sab</div>
+          </div>
+
+          <!-- First row of days (with muted previous month days) -->
+          <div class="calendar-row">
+            <div class="calendar-day muted">29</div>
+            <div class="calendar-day muted">30</div>
+            <div class="calendar-day muted">31</div>
+            <div class="calendar-day">1</div>
+            <div class="calendar-day">2</div>
+            <div class="calendar-day">3</div>
+            <div class="calendar-day selected">4</div>
+          </div>
+
+          <!-- Additional rows (static layout example) -->
+          <div class="calendar-row">
+            <div class="calendar-day">5</div>
+            <div class="calendar-day">6</div>
+            <div class="calendar-day">7</div>
+            <div class="calendar-day">8</div>
+            <div class="calendar-day">9</div>
+            <div class="calendar-day">10</div>
+            <div class="calendar-day">11</div>
+          </div>
+
+          <div class="calendar-row">
+            <div class="calendar-day">12</div>
+            <div class="calendar-day">13</div>
+            <div class="calendar-day">14</div>
+            <div class="calendar-day">15</div>
+            <div class="calendar-day">16</div>
+            <div class="calendar-day">17</div>
+            <div class="calendar-day">18</div>
+          </div>
+
+          <div class="calendar-row">
+            <div class="calendar-day">19</div>
+            <div class="calendar-day">20</div>
+            <div class="calendar-day">21</div>
+            <div class="calendar-day">22</div>
+            <div class="calendar-day">23</div>
+            <div class="calendar-day">24</div>
+            <div class="calendar-day">25</div>
+          </div>
+
+          <div class="calendar-row">
+            <div class="calendar-day">26</div>
+            <div class="calendar-day">27</div>
+            <div class="calendar-day">28</div>
+            <div class="calendar-day">29</div>
+            <div class="calendar-day">30</div>
+            <div class="calendar-day">31</div>
+            <div class="calendar-day muted">1</div>
+          </div>
+        </div>
+      </div>
+
+      <div class="booking-subtitle">Selecione o horário:</div>
+      <p class="times-note">Você pode escolher mais de um horário por dia.</p>
+
+      <div class="time-slot">07:00 – 08:00 <span class="price">R$ 50,00</span></div>
+      <div class="time-slot">08:00 – 09:00 <span class="price">R$ 50,00</span></div>
+      <div class="time-slot">09:00 – 10:00 <span class="price">R$ 50,00</span></div>
+      <div class="time-slot">10:00 – 11:00 <span class="price">R$ 50,00</span></div>
+
+      <button class="reserve-button">Reservar</button>
+
+    </section>
+
+  </div>
+
+  <script>
+    const step1 = document.getElementById("step-1");
+    const step2 = document.getElementById("step-2");
+    const backButton = document.getElementById("back-button");
+    const continueBtn = document.getElementById("continue-btn");
+
+    continueBtn.addEventListener("click", () => {
+      step1.classList.add("hide");
+      step2.classList.remove("hide");
+      backButton.style.display = "block";
+      window.scrollTo({ top: 0, behavior: "smooth" });
+    });
+
+    backButton.addEventListener("click", () => {
+      step2.classList.add("hide");
+      step1.classList.remove("hide");
+      backButton.style.display = "none";
+      continueBtn.textContent = "Escolha data e horário";
+      window.scrollTo({ top: 0, behavior: "smooth" });
+    });
+
+    document.querySelectorAll(".time-slot").forEach(slot => {
+      slot.addEventListener("click", () => {
+        slot.classList.toggle("selected");
+      });
+    });
+  </script>
+
+</body>
+</html>
